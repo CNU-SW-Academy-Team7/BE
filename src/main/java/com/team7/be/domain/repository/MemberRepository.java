@@ -11,6 +11,7 @@ import java.util.Optional;
 public interface MemberRepository extends JpaRepository<Member,Long> {
     //JAP repository를 사용
     // 그냥 사용하는 것 이 아닌 build.gradle의 dependency에 선언해서 사용가능.
+    // 안녕 난 솔이 22살이지.
 
     Optional<Member> findByUserId(@Param("userId")String userId);
     // memberId를 받아와 저장되어있는 레포지토리에서 Id를 가지고 있는 Member객체를 반환한다.
