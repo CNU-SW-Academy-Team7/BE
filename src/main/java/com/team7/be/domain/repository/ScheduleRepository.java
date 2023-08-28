@@ -2,11 +2,20 @@ package com.team7.be.domain.repository;
 
 import com.team7.be.domain.entity.Schedule;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
     Optional<Schedule> findByGroupId(@Param("groupId") Long groupId);
     Optional<Schedule> findByGroupIdAndMemberId(@Param("groupId") Long groupId, @Param("MemberId") Long memberId);
+
+    List<Schedule> findByGroupIdAndSelectedStartDateIsAfterAndSelectedEndDateIsBefore(
+            @Param("groupId") Long groupId,
+            @Param("selectedStartDate") LocalDateTime selectedStartDate,
+            @Param("selectedEndDate") LocalDateTime selectedEndDate
+    );
 }
