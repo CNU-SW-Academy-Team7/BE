@@ -14,6 +14,7 @@ public class Group {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="groupId")
     private Long id;
+
     //그룹 이름,UNIQUE제약조건 설정
     @Column(name="groupName",unique = true)
     private String groupName;
