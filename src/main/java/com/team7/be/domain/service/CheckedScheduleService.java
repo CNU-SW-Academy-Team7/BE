@@ -44,15 +44,16 @@ public class CheckedScheduleService {
         );
     }
 
-    List<CheckedScheduleResponse> getCheckedSchedule(Long scheduleId, Long groupId){
+
+    public List<CheckedScheduleResponse> getCheckedSchedule(Long groupId){
+        List<CheckedSchedule> getGroupScheduleList = checkedScheduleRepository.findByGroupId(groupId);
         List<CheckedScheduleResponse> checkedScheduleResponsesList = new ArrayList<>();
-        checkedScheduleResponsesList.forEach(
-                (schedule -> {
+        getGroupScheduleList.forEach(
+                (checkedSchedule -> {
                     checkedScheduleResponsesList.add(
                             CheckedScheduleResponse.builder()
-                                    .scheduleId(scheduleId)
-                                    .checkedStartTime(schedule.getCheckedStartTime())
-                                    .checkedEndTime(schedule.getCheckedEndTime())
+                                    .checkedStartTime(checkedSchedule.getSelectedStartTime())
+                                    .checkedEndTime(checkedSchedule.getSelectedEndTime())
                                     .build()
                     );
                 })
