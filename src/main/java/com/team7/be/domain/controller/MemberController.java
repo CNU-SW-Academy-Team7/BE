@@ -35,7 +35,8 @@ public class MemberController {
     public ResponseEntity<String> signIn(@RequestBody SignInRequest signInRequest) {
         Optional<Member> findMember = memberService.signIn(signInRequest);
         if (findMember.isPresent()) {
-            return ResponseEntity.ok("로그인 성공");
+//            return ResponseEntity.ok("로그인 성공");
+            return ResponseEntity.ok(findMember.get().getUserId()); // 사용자 id 반환
         } else return ResponseEntity.badRequest().body("로그인 실패");
     }
 

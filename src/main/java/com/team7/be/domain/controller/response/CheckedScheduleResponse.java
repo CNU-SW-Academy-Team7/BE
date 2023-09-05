@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class CheckedScheduleResponse {
-    private Long scheduleId;
     private LocalDateTime checkedStartTime;
     private LocalDateTime checkedEndTime;
 
