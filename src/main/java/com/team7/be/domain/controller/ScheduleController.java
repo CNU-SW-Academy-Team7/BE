@@ -1,9 +1,8 @@
 package com.team7.be.domain.controller;
 
 import com.team7.be.domain.controller.request.schedule.CheckedScheduleListRequest;
-import com.team7.be.domain.controller.request.schedule.CheckedScheduleRequest;
+import com.team7.be.domain.controller.response.OneWeekScheduleResponse;
 import com.team7.be.domain.service.CheckedScheduleService;
-import com.team7.be.domain.service.dto.CheckedScheduleListDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +10,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,5 +26,9 @@ public class ScheduleController {
                 .toUri();
         return ResponseEntity.created(uri).build();
     }
-
+    @GetMapping("/scheduleList")
+    @ResponseBody
+    public ResponseEntity<List<OneWeekScheduleResponse>> getOneWeekScheduleList(LocalDate currentTime){
+        return ResponseEntity.ok(checkedScheduleService.getAllOneWeekSchedule(currentTime));
+    }
 }

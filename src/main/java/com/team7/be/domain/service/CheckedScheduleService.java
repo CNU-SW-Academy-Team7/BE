@@ -1,6 +1,7 @@
 package com.team7.be.domain.service;
 
 import com.team7.be.domain.controller.response.CheckedScheduleResponse;
+import com.team7.be.domain.controller.response.OneWeekScheduleResponse;
 import com.team7.be.domain.entity.schedule.CheckedSchedule;
 import com.team7.be.domain.repository.CheckedScheduleRepository;
 import com.team7.be.domain.service.dto.CheckedScheduleDto;
@@ -9,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,12 +64,12 @@ public class CheckedScheduleService {
         return checkedScheduleResponsesList;
 
     }
-    public List<CheckedScheduleResponse> getAllOneWeekSchedule(LocalDateTime selectedStartTime){
+    public List<OneWeekScheduleResponse> getAllOneWeekSchedule(LocalDate selectedStartTime){
         List<CheckedSchedule>ScheduleList = checkedScheduleRepository.getAllOneWeekSchedule(selectedStartTime,selectedStartTime.plusWeeks(1));
-        List<CheckedScheduleResponse> checkedScheduleResponsesList=new ArrayList<>();
+        List<OneWeekScheduleResponse> ScheduleResponsesList=new ArrayList<>();
         ScheduleList.forEach(s->{
-            checkedScheduleResponsesList.add(
-                    CheckedScheduleResponse.builder()
+            ScheduleResponsesList.add(
+                    OneWeekScheduleResponse.builder()
                             .scheduleId(s.getCheckedScheduleId())
                             .checkedStartTime(s.getSelectedStartTime())
                             .checkedEndTime(s.getSelectedEndTime())
@@ -75,15 +77,15 @@ public class CheckedScheduleService {
             );
         });
 
-        return checkedScheduleResponsesList;
+        return ScheduleResponsesList;
 
     }
-    public List<CheckedScheduleResponse> getGroupOneWeekSchedule(Long gorupId, LocalDateTime selectedStartTime){
-        List<CheckedSchedule>ScheduleList = checkedScheduleRepository.getGroupOneWeekSchedule(gorupId,selectedStartTime,selectedStartTime.plusWeeks(1));
-        List<CheckedScheduleResponse> checkedScheduleResponsesList=new ArrayList<>();
+    public List<OneWeekScheduleResponse> getGroupOneWeekSchedule(Long groupId, LocalDate selectedStartTime){
+        List<CheckedSchedule>ScheduleList = checkedScheduleRepository.getGroupOneWeekSchedule(groupId,selectedStartTime,selectedStartTime.plusWeeks(1));
+        List<OneWeekScheduleResponse> ScheduleResponsesList=new ArrayList<>();
         ScheduleList.forEach(s->{
-            checkedScheduleResponsesList.add(
-                    CheckedScheduleResponse.builder()
+            ScheduleResponsesList.add(
+                    OneWeekScheduleResponse.builder()
                             .scheduleId(s.getCheckedScheduleId())
                             .checkedStartTime(s.getSelectedStartTime())
                             .checkedEndTime(s.getSelectedEndTime())
@@ -91,7 +93,7 @@ public class CheckedScheduleService {
             );
         });
 
-        return checkedScheduleResponsesList;
+        return ScheduleResponsesList;
 
     }
 
