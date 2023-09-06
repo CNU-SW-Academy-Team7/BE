@@ -28,14 +28,4 @@ public class ScheduleController {
         return ResponseEntity.created(uri).build();
     }
 
-    @GetMapping("/ScheduleList /{groupId}")
-    @ResponseBody
-    public ResponseEntity<Void> getWeekSchedule(@PathVariable Long groupId, LocalDateTime time){
-        checkedScheduleService.getGroupOneWeekSchedule(groupId,time);
-
-        URI uri = UriComponentsBuilder.fromPath("/schedule/{groupId}")
-                .buildAndExpand(groupId)
-                .toUri();
-        return ResponseEntity.created(uri).build();
-    }
 }
