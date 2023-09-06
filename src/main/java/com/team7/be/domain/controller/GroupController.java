@@ -1,5 +1,7 @@
 package com.team7.be.domain.controller;
 
+import com.team7.be.domain.controller.request.member.SignUpRequest;
+import com.team7.be.domain.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,14 +18,5 @@ import static org.springframework.web.util.UriComponentsBuilder.fromPath;
 public class GroupController {
     private final MemberService memberService;
 
-    @PostMapping("/signUp")
-    public ResponseEntity<Void> signUp(@RequestBody SignUpRequest signUpRequest){
-        String  userId = memberService.signUp(signUpRequest);
-        URI uri = fromPath("/member/{userId}")
-                .buildAndExpand(userId)
-                .toUri();
-
-        return ResponseEntity.created(uri).build();
-        }
-    }
+}
 

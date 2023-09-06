@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,7 +62,38 @@ public class CheckedScheduleService {
         return checkedScheduleResponsesList;
 
     }
+    public List<CheckedScheduleResponse> getAllOneWeekSchedule(LocalDateTime selectedStartTime){
+        List<CheckedSchedule>ScheduleList = checkedScheduleRepository.getAllOneWeekSchedule(selectedStartTime,selectedStartTime.plusWeeks(1));
+        List<CheckedScheduleResponse> checkedScheduleResponsesList=new ArrayList<>();
+        ScheduleList.forEach(s->{
+            checkedScheduleResponsesList.add(
+                    CheckedScheduleResponse.builder()
+                            .scheduleId(s.getCheckedScheduleId())
+                            .checkedStartTime(s.getSelectedStartTime())
+                            .checkedEndTime(s.getSelectedEndTime())
+                            .build()
+            );
+        });
 
+        return checkedScheduleResponsesList;
+
+    }
+    public List<CheckedScheduleResponse> getGroupOneWeekSchedule(Long gorupId, LocalDateTime selectedStartTime){
+        List<CheckedSchedule>ScheduleList = checkedScheduleRepository.getGroupOneWeekSchedule(gorupId,selectedStartTime,selectedStartTime.plusWeeks(1));
+        List<CheckedScheduleResponse> checkedScheduleResponsesList=new ArrayList<>();
+        ScheduleList.forEach(s->{
+            checkedScheduleResponsesList.add(
+                    CheckedScheduleResponse.builder()
+                            .scheduleId(s.getCheckedScheduleId())
+                            .checkedStartTime(s.getSelectedStartTime())
+                            .checkedEndTime(s.getSelectedEndTime())
+                            .build()
+            );
+        });
+
+        return checkedScheduleResponsesList;
+
+    }
 
 
 }
