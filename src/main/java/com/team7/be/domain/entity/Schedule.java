@@ -15,13 +15,11 @@ public class Schedule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long scheduleId; // PK
 
-    @ManyToOne
     @JoinColumn(name="groupId")
-    private Group groupId; // Group 테이블의 FK
+    private Long groupId; // Group 테이블의 FK
 
-    @ManyToOne
     @JoinColumn(name="memberId")
-    private Member memberId; // Member 테이블의 FK
+    private Long memberId; // Member 테이블의 FK
 
     private LocalDateTime selectedStartDate;
     private LocalDateTime selectedEndDate;
