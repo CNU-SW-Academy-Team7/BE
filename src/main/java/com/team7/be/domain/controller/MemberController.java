@@ -2,14 +2,14 @@ package com.team7.be.domain.controller;
 
 import com.team7.be.domain.controller.request.member.SignInRequest;
 import com.team7.be.domain.controller.request.member.SignUpRequest;
-import com.team7.be.domain.entity.Member;
+import com.team7.be.domain.controller.response.SignInResponse;
 import com.team7.be.domain.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.util.Optional;
+//import java.util.Optional;
 
 import static org.springframework.web.util.UriComponentsBuilder.fromPath;
 
@@ -22,7 +22,7 @@ public class MemberController {
 
     @PostMapping("/signUp")
     public ResponseEntity<Void> signUp(@RequestBody SignUpRequest signUpRequest){
-        String  userId = memberService.signUp(signUpRequest);
+        String userId = memberService.signUp(signUpRequest);
         //service의 signUp 메소드를 사용하여 저장된 의 고유 id를 저장
         URI uri = fromPath("/member/{userId}")
                 .buildAndExpand(userId)
@@ -31,13 +31,18 @@ public class MemberController {
         return ResponseEntity.created(uri).build();
     }
 
+//    @PostMapping("/signIn")
+//    public ResponseEntity<String> signIn(@RequestBody SignInRequest signInRequest) {
+//        Optional<Member> findMember = memberService.signIn(signInRequest);
+//        if (findMember.isPresent()) {
+////            return ResponseEntity.ok("로그인 성공");
+//            return ResponseEntity.ok(findMember.get().getUserId()); // 사용자 id 반환
+//        } else return ResponseEntity.badRequest().body("로그인 실패");
+//    }
+
     @PostMapping("/signIn")
-    public ResponseEntity<String> signIn(@RequestBody SignInRequest signInRequest) {
-        Optional<Member> findMember = memberService.signIn(signInRequest);
-        if (findMember.isPresent()) {
-//            return ResponseEntity.ok("로그인 성공");
-            return ResponseEntity.ok(findMember.get().getUserId()); // 사용자 id 반환
-        } else return ResponseEntity.badRequest().body("로그인 실패");
+    public ResponseEntity<SignInResponse> signIn(@RequestBody SignInRequest signInRequest) {
+            return ResponseEntity.ok(memberService.signIn(signInRequest.getUserEmail(),signInRequest.getUserPw())); // 사용자 Email 반환
     }
 
     @DeleteMapping("/delete/{userId}")
