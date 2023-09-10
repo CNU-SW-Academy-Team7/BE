@@ -16,8 +16,8 @@ public class Schedule {
     private Long scheduleId; // PK
 
     @ManyToOne
-    @JoinColumn(name="groupId")
-    private Group groupId; // Group 테이블의 FK
+    @JoinColumn(name="userGroupId")
+    private UserGroup userGroupId; // UserGroup 테이블의 FK
 
     @ManyToOne
     @JoinColumn(name="memberId")

@@ -5,13 +5,12 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CheckedScheduleListDto {
-    private List<CheckedScheduleDto> checkedScheduleList;
-
+public class MemberDto {
+    private String userEmail;
+    private String userName;
+    private String userPw;
 }
