@@ -13,10 +13,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 
-public class CheckedScheduleDto {
-    private Long userId;
+public class AvailableScheduleDto {
+//    private String userName;
 //    private Long scheduleId;
     private Long groupId;
-    private LocalDateTime selectedStartTime;
-    private LocalDateTime selectedEndTime;
+    private LocalDateTime availableStartTime;
+    private LocalDateTime availableEndTime;
 }

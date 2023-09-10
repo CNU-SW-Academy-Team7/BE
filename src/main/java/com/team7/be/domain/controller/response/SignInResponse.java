@@ -12,8 +12,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CheckedScheduleResponse {
-    private LocalDateTime checkedStartTime;
-    private LocalDateTime checkedEndTime;
+
+public class SignInResponse {
+
+    private String userName;
+
 
 }

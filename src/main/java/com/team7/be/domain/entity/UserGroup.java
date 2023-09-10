@@ -9,11 +9,11 @@ import lombok.*;
 @NoArgsConstructor // 매개변수 없는 생성자
 @AllArgsConstructor // 매개변수 이쓴 생성자
 @Builder
-public class Group {
+public class UserGroup {
     //그룹 구분을 위한 id, 자동 생성 사용
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="groupId")
-    private Long id;
+    @Column(name="userGroupId")
+    private Long groupId;
 
     //그룹 이름,UNIQUE제약조건 설정
     @Column(name="groupName",unique = true)
