@@ -13,7 +13,8 @@ import java.util.List;
 @Builder
 public class AvailableScheduleListDto {
     private List<AvailableScheduleDto> availableScheduleDtoList;
-
-    private String userName;
+    private Long userId;
+    private Long scheduleId;
+    private Long groupId;
 
 }

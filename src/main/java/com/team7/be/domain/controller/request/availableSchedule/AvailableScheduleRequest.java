@@ -16,19 +16,12 @@ public class AvailableScheduleRequest {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd-HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd-HH:mm:ss", timezone = "Asia/Seoul")
-    private LocalDateTime availableStartTime;
-
-    @DateTimeFormat(pattern = "yyyy-MM-dd-HH:mm:ss")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd-HH:mm:ss", timezone = "Asia/Seoul")
-    private LocalDateTime availableEndTime;
+    private LocalDateTime availableTime;
 
 
-    public AvailableScheduleDto toDto(Long groupId){
+    public AvailableScheduleDto toDto(){
         return AvailableScheduleDto.builder()
-//                .userName(this.userName)
-                .groupId(groupId)
-                .availableStartTime(this.availableStartTime)
-                .availableEndTime(this.availableEndTime)
+                .availableTime(this.availableTime)
                 .build();
     }
 

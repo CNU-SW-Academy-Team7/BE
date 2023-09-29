@@ -3,13 +3,13 @@ package com.team7.be.domain.service;
 import com.team7.be.domain.controller.response.AvailableScheduleResponse;
 import com.team7.be.domain.entity.availableSchedule.AvailableSchedule;
 import com.team7.be.domain.repository.AvailableScheduleRepository;
-import com.team7.be.domain.service.dto.AvailableScheduleDto;
 import com.team7.be.domain.service.dto.AvailableScheduleListDto;
 import com.team7.be.global.exception.SaveScheduleException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,16 +22,28 @@ public class AvailableScheduleService {
 
     @Transactional
     public void saveAvailableSchedule(AvailableScheduleListDto availableScheduleListDto){
-        try {
+        List<LocalDateTime> availableScheduleList = new ArrayList<>();
 
+        try {
+            availableScheduleListDto.getAvailableScheduleDtoList().forEach(
+                    availableScheduleDto -> {
+                        availableScheduleList.add(availableScheduleDto.getAvailableTime());
+                    }
+            );
+        }catch (Exception e){
+            throw new SaveScheduleException("가능 시간 저장에 실패하였습니다.");
+        }
+
+        try {
 
             availableScheduleListDto.getAvailableScheduleDtoList().forEach(
                     (schedule -> {
                         AvailableSchedule availableSchedule = AvailableSchedule.builder()
-//                            .userName(schedule.getUserName())
-                                .groupId(schedule.getGroupId())
-                                .availableStartTime(schedule.getAvailableStartTime())
-                                .availableEndTime(schedule.getAvailableEndTime())
+                                .availableScheduleId(availableScheduleListDto.getScheduleId())
+                                .userId(availableScheduleListDto.getUserId())
+                                .groupId(availableScheduleListDto.getGroupId())
+                                .availableTimeList(availableScheduleList)
+
                                 .build();
 
                         availableScheduleRepository.save(availableSchedule);

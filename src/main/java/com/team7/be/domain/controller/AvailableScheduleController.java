@@ -17,11 +17,11 @@ public class AvailableScheduleController {
     private final AvailableScheduleService availableScheduleService;
 
 
-    @PostMapping("/availableSchedule/{groupId}")
-    public ResponseEntity<Void> saveCheckedSchedule(@PathVariable Long groupId, @RequestBody AvailableScheduleListRequest availableScheduleListRequest){
-        availableScheduleService.saveAvailableSchedule(availableScheduleListRequest.toDto(groupId));
+    @PostMapping("/availableSchedule/{groupId}/{scheduleId}/{userId}")
+    public ResponseEntity<Void> saveCheckedSchedule(@PathVariable Long groupId,@PathVariable Long scheduleId, @PathVariable Long userId, @RequestBody AvailableScheduleListRequest availableScheduleListRequest){
+        availableScheduleService.saveAvailableSchedule(availableScheduleListRequest.toDto(groupId, scheduleId, userId));
 
-        URI uri = UriComponentsBuilder.fromPath("/schedule/{userGroupId}")
+        URI uri = UriComponentsBuilder.fromPath("/schedule/{groupId}")
                 .buildAndExpand(groupId)
                 .toUri();
 
