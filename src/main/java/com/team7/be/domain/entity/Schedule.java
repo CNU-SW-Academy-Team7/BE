@@ -25,4 +25,5 @@ public class Schedule {
 
     private LocalDateTime selectedStartDate;
     private LocalDateTime selectedEndDate;
+    private String scheduleName;
 }
