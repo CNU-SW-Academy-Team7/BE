@@ -18,4 +18,6 @@ public interface AvailableScheduleRepository extends JpaRepository<AvailableSche
 
     List<AvailableSchedule> findByAvailableScheduleId(@Param("availableScheduleId")Long availableScheduleId);
 
+    List<AvailableSchedule> findByGroupIdAndScheduleId(@Param("groupId") Long groupId, @Param("scheduleId") Long scheduleId);
+
 }

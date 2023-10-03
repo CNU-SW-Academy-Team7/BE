@@ -23,6 +23,8 @@ public class AvailableSchedule {
     @JoinColumn(name = "group_id")
     private Long groupId;
 
+    private Long scheduleId;
+
     private LocalDateTime availableStartTime;
     private LocalDateTime availableEndTime;
 }

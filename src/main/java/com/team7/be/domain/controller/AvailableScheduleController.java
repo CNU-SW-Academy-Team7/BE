@@ -34,4 +34,17 @@ public class AvailableScheduleController {
         List<AvailableScheduleResponse> availableSchedulList = availableScheduleService.getAvailableSchedule(groupId);
         return ResponseEntity.ok(availableSchedulList);
     }
+
+    @GetMapping("/availableScheduleList/{groupId}/{scheduleId}")
+    public ResponseEntity<List<AvailableScheduleResponse>> getAvailableScheduleList(@PathVariable Long groupId, @PathVariable Long scheduleId) {
+        List<AvailableScheduleResponse> availableScheduleList = availableScheduleService.getAvailableScheduleList(groupId, scheduleId);
+        return ResponseEntity.ok(availableScheduleList);
+    }
+
+    @GetMapping("/availableScheduleResult/{groupId}/{scheduleId}")
+    public ResponseEntity<AvailableScheduleResponse> getAvailableScheduleResult(@PathVariable Long groupId, @PathVariable Long scheduleId) {
+        AvailableScheduleResponse availableResult = availableScheduleService.getAvailableScheduleResult(groupId, scheduleId);
+        return ResponseEntity.ok(availableResult);
+    }
+
 }
