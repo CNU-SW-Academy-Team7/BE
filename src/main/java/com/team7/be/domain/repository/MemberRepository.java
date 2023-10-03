@@ -15,6 +15,6 @@ public interface MemberRepository extends JpaRepository<Member,Long> {
     Optional<Member> findByUserEmail(@Param("userEmail")String userEmail);
     // memberId를 받아와 저장되어있는 레포지토리에서 userId를 가지고 있는 Member객체를 반환한다.
     // 이 repo에 대한 저장 및 탐색 등의 메소드 작업을 진행하는 곳은 service.MemberSerive
-
+    Optional<Member> findByUserId(@Param("userId")Long userId);
 
 }
