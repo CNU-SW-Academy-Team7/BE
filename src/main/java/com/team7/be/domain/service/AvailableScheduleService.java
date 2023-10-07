@@ -25,8 +25,8 @@ import java.util.Optional;
 @Transactional(readOnly = false)
 public class AvailableScheduleService {
     private final AvailableScheduleRepository availableScheduleRepository;
-    UserGroupRepository userGroupRepository;
-    ScheduleRepository scheduleRepository;
+    private final UserGroupRepository userGroupRepository;
+    private final ScheduleRepository scheduleRepository;
 
 
     @Transactional
