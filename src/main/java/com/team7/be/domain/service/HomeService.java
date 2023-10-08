@@ -17,9 +17,8 @@ import java.util.Optional;
 @Transactional(readOnly = false)
 public class HomeService {
     private final ScheduleRepository scheduleRepository;
-    private final MemberRepository memberRepository;
     public HomeResponse getHome(Long userId) {
-        List<Schedule> schedule = scheduleRepository.findByMemberId(userId);
+        List<Schedule> schedule = scheduleRepository.findByMemberId_userId(userId);
         LocalDateTime recentDate = LocalDateTime.MAX;
         String groupName="";
         String scheduleName="";

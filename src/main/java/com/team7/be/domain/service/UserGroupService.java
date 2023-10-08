@@ -49,7 +49,7 @@ public class UserGroupService {
 
     public List<getGroupResponse> getGroupList(Long userId) {
         List<getGroupResponse> groupList=new ArrayList<>();
-        List<Schedule> schedule = scheduleRepository.findByMemberId(userId);
+        List<Schedule> schedule = scheduleRepository.findByMemberId_userId(userId);
         if (!schedule.isEmpty()) {
             for(Schedule s:schedule){
                 var memberList=new HashSet<String>();

@@ -12,7 +12,6 @@ import java.util.Optional;
 
 public interface ScheduleRepository extends JpaRepository<Schedule,Long> {
     //userId로 스케쥴 찾는 부분.
-    List<Schedule> findByMemberId(@Param("memberId")Long userId);
     List<Schedule> findByMemberId_userId(Long id);
     List<Schedule> findByUserGroupId_GroupId(Long id);
 
