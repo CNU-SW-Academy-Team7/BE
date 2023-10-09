@@ -18,7 +18,6 @@ public class AvailableScheduleListRequest {
 
     private List<AvailableScheduleRequest> availableScheduleList;
 
-
     public AvailableScheduleListDto toDto(Long groupId){
         List<AvailableScheduleDto> availableScheduleDtoList = new ArrayList<>();
 

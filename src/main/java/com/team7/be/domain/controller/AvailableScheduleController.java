@@ -14,8 +14,8 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 public class AvailableScheduleController {
-    private final AvailableScheduleService availableScheduleService;
 
+    private final AvailableScheduleService availableScheduleService;
 
     @PostMapping("/availableSchedule/{groupId}")
     public ResponseEntity<Void> saveCheckedSchedule(@PathVariable Long groupId, @RequestBody AvailableScheduleListRequest availableScheduleListRequest){

@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -57,15 +58,17 @@ public class AvailableScheduleService {
         List<AvailableScheduleResponse> availableTimes = new ArrayList<>();
         LocalDateTime lastEndTime = schedules.get(0).getAvailableStartTime(); // 첫 스케줄 시작 시간을 초기값으로
 
-        for(AvailableSchedule schedule : schedules) {
-            if(!lastEndTime.isEqual(schedule.getAvailableStartTime())) {
+        for (int i = 0; i < schedules.size(); i++) {
+            AvailableSchedule currentSchedule = schedules.get(i);
+            if (!lastEndTime.isEqual(currentSchedule.getAvailableStartTime())) {
                 // 빈 시간대 발견
+                long hoursAvailable = Duration.between(lastEndTime, currentSchedule.getAvailableStartTime()).toHours();
                 availableTimes.add(AvailableScheduleResponse.builder()
                         .availableStartTime(lastEndTime)
-                        .availableEndTime(schedule.getAvailableStartTime())
+                        .availableNum((int) hoursAvailable)
                         .build());
             }
-            lastEndTime = schedule.getAvailableEndTime();
+            lastEndTime = currentSchedule.getAvailableEndTime();
         }
 
         return availableTimes;
@@ -83,14 +86,17 @@ public class AvailableScheduleService {
 
             // 만약 현재 스케줄의 끝나는 시간과 다음 스케줄의 시작 시간 사이에 간격이 있다면
             if (!endOfCurrentSchedule.isEqual(startOfNextSchedule)) {
+                long hoursAvailable = Duration.between(endOfCurrentSchedule, startOfNextSchedule).toHours();
                 return AvailableScheduleResponse.builder()
                         .availableStartTime(endOfCurrentSchedule)
                         .availableEndTime(startOfNextSchedule)
+                        .availableNum((int) hoursAvailable)
                         .build();
             }
         }
 
         return null;  // 혹은 예외처리 가능
     }
+
 
 }
