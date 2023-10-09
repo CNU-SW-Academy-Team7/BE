@@ -12,10 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -48,6 +45,7 @@ public class UserGroupService {
     }
 
     public List<getGroupResponse> getGroupList(Long userId) {
+        Map<Long,getGroupResponse> groupMap=new HashMap<>();
         List<getGroupResponse> groupList=new ArrayList<>();
         List<Schedule> schedule = scheduleRepository.findByMemberId_userId(userId);
         if (!schedule.isEmpty()) {
@@ -59,11 +57,12 @@ public class UserGroupService {
                 for(Schedule getName:selectScheduleByGroup){
                     memberList.add(getName.getMemberId().getUserName());
                 }
-                groupList.add(getGroupResponse.builder()
+                groupMap.put(groupId,getGroupResponse.builder()
                         .groupName(groupName)
                         .memberList(memberList.stream().toList())
                         .build());
             }
+            groupMap.values().stream().forEach(groupList::add);
             return groupList;
         }
         else{
