@@ -7,8 +7,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class MakeGroupRequest {
-    private String GroupName;
+public class CreateGroupRequest {
+    private String groupName;
 }
 
 // 사용자로부터 요청과 함게 입력되어야 하는 그룹 생성 요구사장

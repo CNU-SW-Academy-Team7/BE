@@ -1,6 +1,5 @@
 package com.team7.be.domain.controller.response;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,9 +11,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CheckedScheduleResponse {
-    private Long scheduleId;
-    private LocalDateTime checkedStartTime;
-    private LocalDateTime checkedEndTime;
-
+public class HomeResponse {
+    private String groupName;
+    private LocalDateTime date;
+    private String scheduleName;
 }
