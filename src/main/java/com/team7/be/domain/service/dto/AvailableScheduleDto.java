@@ -14,9 +14,5 @@ import java.time.LocalDateTime;
 @Builder
 
 public class AvailableScheduleDto {
-//    private String userName;
-//    private Long scheduleId;
-    private Long groupId;
-    private LocalDateTime availableStartTime;
-    private LocalDateTime availableEndTime;
+    private LocalDateTime availableTime;
 }
