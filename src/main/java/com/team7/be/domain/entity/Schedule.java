@@ -3,6 +3,7 @@ package com.team7.be.domain.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 @Entity
 @Getter
@@ -25,4 +26,7 @@ public class Schedule {
 
     private LocalDateTime selectedStartDate;
     private LocalDateTime selectedEndDate;
+
+    private LocalDate date;
+    private String scheduleName;
 }
