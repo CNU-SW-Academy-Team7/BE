@@ -1,5 +1,6 @@
 package com.team7.be.domain.service;
 
+import com.team7.be.domain.controller.response.AvailableScheduleListResponse;
 import com.team7.be.domain.controller.response.AvailableScheduleResponse;
 import com.team7.be.domain.entity.availableSchedule.AvailableSchedule;
 import com.team7.be.domain.repository.AvailableScheduleRepository;
@@ -31,7 +32,7 @@ public class AvailableScheduleService {
                     }
             );
         }catch (Exception e){
-            throw new SaveScheduleException("가능 시간 저장에 실패하였습니다.");
+            throw new SaveScheduleException("가능 시간을 불러오는데 실패하였습니다.");
         }
 
         try {
@@ -42,8 +43,6 @@ public class AvailableScheduleService {
                                 .availableScheduleId(availableScheduleListDto.getScheduleId())
                                 .userId(availableScheduleListDto.getUserId())
                                 .groupId(availableScheduleListDto.getGroupId())
-                                .availableTimeList(availableScheduleList)
-
                                 .build();
 
                         availableScheduleRepository.save(availableSchedule);
@@ -55,21 +54,22 @@ public class AvailableScheduleService {
     }
 
 
-    public List<AvailableScheduleResponse> getAvailableSchedule(Long groupId){
-        List<AvailableSchedule> getGroupScheduleList = availableScheduleRepository.findByGroupId(groupId);
+    public AvailableScheduleListResponse getAvailableGroupSchedule(Long groupId,Long scheduleId){
+        List<AvailableSchedule> getGroupScheduleList = availableScheduleRepository.findByAvailableScheduleIdAndGroupId(scheduleId,groupId);
         List<AvailableScheduleResponse> availableScheduleResponsesList = new ArrayList<>();
         getGroupScheduleList.forEach(
                 (availableSchedule -> {
                     availableScheduleResponsesList.add(
                             AvailableScheduleResponse.builder()
-                                    .availableStartTime(availableSchedule.getAvailableStartTime())
-                                    .availableEndTime(availableSchedule.getAvailableEndTime())
+                                    .availableTime(availableSchedule.getAvailableTime())
                                     .build()
                     );
                 })
         );
 
-        return availableScheduleResponsesList;
+
+        return AvailableScheduleListResponse.builder()
+                .availableScheduleResponseList(availableScheduleResponsesList).build();
 
     }
 

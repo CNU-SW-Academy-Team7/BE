@@ -26,8 +26,6 @@ public class AvailableSchedule {
     private Long groupId;
 
 
-    @ElementCollection
-    @CollectionTable(name = "local_date_time_list", joinColumns = @JoinColumn(name = "entity_id"))
     @Column(name = "local_date_time")
-    private List<LocalDateTime> availableTimeList;
+    private LocalDateTime availableTime;
 }
