@@ -18,9 +18,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+// import java.util.stream.Collectors;
 import java.util.Optional;
 
 @Service
@@ -31,8 +34,8 @@ public class AvailableScheduleService {
     private final UserGroupRepository userGroupRepository;
     private final ScheduleRepository scheduleRepository;
 
-
     @Transactional
+
     public void saveAvailableSchedule(AvailableScheduleListDto availableScheduleListDto){
         List<LocalDateTime> availableScheduleList = new ArrayList<>();
 
@@ -64,7 +67,17 @@ public class AvailableScheduleService {
         }
     }
 
+    public List<AvailableScheduleResponse> getAvailableSchedule(Long groupId) {
+        List<AvailableSchedule> schedules = availableScheduleRepository.findByGroupId(groupId);
+        return schedules.stream()
+                .map(schedule -> AvailableScheduleResponse.builder()
+                        .availableStartTime(schedule.getAvailableStartTime())
+                        .availableEndTime(schedule.getAvailableEndTime())
+                        .build())
+                .collect(Collectors.toList());
+    }
 
+   
     public AvailableScheduleListResponse getAvailableGroupSchedule(Long groupId,Long scheduleId){
         List<AvailableSchedule> getGroupScheduleList = availableScheduleRepository.findByAvailableScheduleIdAndGroupId(scheduleId,groupId);
         List<AvailableScheduleResponse> availableScheduleResponsesList = new ArrayList<>();
@@ -81,8 +94,8 @@ public class AvailableScheduleService {
 
         return AvailableScheduleListResponse.builder()
                 .availableScheduleResponseList(availableScheduleResponsesList).build();
-
     }
+
 
     public Long createGroupSchedule(Long groupId, CreateGroupScheduleDto createGroupScheduleDto) {
 

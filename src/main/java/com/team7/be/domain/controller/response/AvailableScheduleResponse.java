@@ -15,8 +15,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class AvailableScheduleResponse {
-    @DateTimeFormat(pattern = "yyyy-MM-dd-HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd-HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime availableTime;
+    private Integer availableNum;
 
 }

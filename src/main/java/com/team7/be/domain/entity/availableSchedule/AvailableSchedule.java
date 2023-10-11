@@ -1,6 +1,5 @@
 package com.team7.be.domain.entity.availableSchedule;
 
-
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor // 매개변수 있는 생성자
 @Builder
 public class AvailableSchedule {
+
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="availableScheduleId")
     private Long availableScheduleId;
@@ -21,7 +21,7 @@ public class AvailableSchedule {
     @JoinColumn(name = "userId")
     private Long userId;
 
-//    @OneToMany(fetch = FetchType.LAZY)
+//  @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id")
     private Long groupId;
 
