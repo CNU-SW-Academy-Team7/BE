@@ -6,12 +6,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CreateGroupScheduleDto {
-    private LocalDate date;
+public class GroupScheduleDto {
+    private LocalDate scheduleDate;
     private String scheduleName;
 }

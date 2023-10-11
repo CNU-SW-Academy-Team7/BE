@@ -18,14 +18,17 @@ public class AvailableSchedule {
     @Column(name="availableScheduleId")
     private Long availableScheduleId;
 
+    @JoinColumn(name = "scheduleId")
+    private Long scheduleId;
+
     @JoinColumn(name = "userId")
     private Long userId;
 
 //  @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "group_id")
+    @JoinColumn(name = "userGroupId")
     private Long groupId;
 
 
-    @Column(name = "local_date_time")
+    @Column(name = "availableTime")
     private LocalDateTime availableTime;
 }

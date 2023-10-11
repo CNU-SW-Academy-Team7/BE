@@ -2,7 +2,7 @@ package com.team7.be.domain.controller;
 
 import com.team7.be.domain.controller.request.member.SignInRequest;
 import com.team7.be.domain.controller.request.member.SignUpRequest;
-import com.team7.be.domain.controller.response.SignInResponse;
+import com.team7.be.domain.controller.response.member.SignInResponse;
 import com.team7.be.domain.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

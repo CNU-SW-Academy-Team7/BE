@@ -1,4 +1,4 @@
-package com.team7.be.domain.controller.response;
+package com.team7.be.domain.controller.response.availableSchedule;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
