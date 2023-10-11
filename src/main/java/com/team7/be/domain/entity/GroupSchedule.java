@@ -4,29 +4,26 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Schedule {
+public class GroupSchedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long scheduleId; // PK
+    @Column(name="groupScheduleId")
+    private Long groupScheduleId; // PK
 
     @ManyToOne
     @JoinColumn(name="userGroupId")
     private UserGroup userGroupId; // UserGroup 테이블의 FK
 
-    @ManyToOne
-    @JoinColumn(name="memberId")
-    private Member memberId; // Member 테이블의 FK
+    @Column(name = "scheduleDate")
+    private LocalDate scheduleDate;
 
-    private LocalDateTime selectedStartDate;
-    private LocalDateTime selectedEndDate;
 
-    private LocalDate date;
     private String scheduleName;
 }

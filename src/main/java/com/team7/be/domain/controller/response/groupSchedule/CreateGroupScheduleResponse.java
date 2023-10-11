@@ -1,21 +1,15 @@
-package com.team7.be.domain.controller.response;
-
+package com.team7.be.domain.controller.response.groupSchedule;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-
-public class SignInResponse {
-
-    private String userName;
-
-
+public class CreateGroupScheduleResponse {
+    private Long scheduleId;
+    private Long groupId;
 }

@@ -1,9 +1,8 @@
 package com.team7.be.domain.service;
 
 
-import com.team7.be.domain.controller.request.member.SignInRequest;
 import com.team7.be.domain.controller.request.member.SignUpRequest;
-import com.team7.be.domain.controller.response.SignInResponse;
+import com.team7.be.domain.controller.response.member.SignInResponse;
 import com.team7.be.domain.entity.Member;
 import com.team7.be.domain.repository.MemberRepository;
 import com.team7.be.global.exception.EmailNotFoundException;

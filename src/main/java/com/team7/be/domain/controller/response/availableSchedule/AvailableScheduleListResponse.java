@@ -1,6 +1,5 @@
-package com.team7.be.domain.controller.response;
+package com.team7.be.domain.controller.response.availableSchedule;
 
-import com.team7.be.domain.controller.request.availableSchedule.AvailableScheduleRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

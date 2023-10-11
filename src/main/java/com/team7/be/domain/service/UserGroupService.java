@@ -18,21 +18,21 @@ public class UserGroupService {
     public Long saveGroup(String groupName){
         UserGroup userGroup = UserGroup.builder()
                 .groupName(groupName).build();
-        return userGroupRepository.save(userGroup).getGroupId();
+        return userGroupRepository.save(userGroup).getUserGroupId();
     }
     //기존 그룹, 그룹 id로 삭제
     @Transactional
-    public void deleteGroup(Long GroupId){
-        userGroupRepository.deleteByGroupId(GroupId);
+    public void deleteGroup(Long userGroupId){
+        userGroupRepository.deleteByUserGroupId(userGroupId);
     }
     //그룹 id로 탐색
 
-    public Optional<UserGroup> findGroupById(Long GroupId){
-        return userGroupRepository.findByGroupId(GroupId);
+    public Optional<UserGroup> findGroupById(Long userGroupId){
+        return userGroupRepository.findByUserGroupId(userGroupId);
     }
     //그룹 이름으로 탐색
 
-    public Optional<UserGroup> findGroupByName(String GroupName){
-        return userGroupRepository.findByGroupName(GroupName);
+    public Optional<UserGroup> findGroupByName(String groupName){
+        return userGroupRepository.findByGroupName(groupName);
     }
 }

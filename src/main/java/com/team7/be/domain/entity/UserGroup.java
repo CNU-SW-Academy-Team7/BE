@@ -13,7 +13,7 @@ public class UserGroup {
     //그룹 구분을 위한 id, 자동 생성 사용
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="userGroupId")
-    private Long groupId;
+    private Long userGroupId;
 
     //그룹 이름,UNIQUE제약조건 설정
     @Column(name="groupName",unique = true)

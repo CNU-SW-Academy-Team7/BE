@@ -11,9 +11,9 @@ public interface UserGroupRepository extends JpaRepository<UserGroup,Long> {
 
 
     //그룹 식별키로 그룹을 찾는 부분. 인자로 Long형 값을 받음.
-    Optional<UserGroup> findByGroupId(@Param("groupId")Long groupId);
+    Optional<UserGroup> findByUserGroupId(@Param("userGroupId")Long groupId);
     //그룹 식별키로 그룹을 제거하는 부분. 인자로 Long형 값을 받음.
-    void deleteByGroupId(@Param("groupId")Long groupId);
+    void deleteByUserGroupId(@Param("userGroupId")Long groupId);
 
     //그룹 이름으로 그룹을 찿는 부분 그룹이름은 unique제약속성을 가짐.
     Optional<UserGroup> findByGroupName(@Param("groupName") String groupName);

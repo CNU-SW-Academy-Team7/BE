@@ -13,7 +13,6 @@ public class Member {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) // 자동으로 id 값 변
     @Column(name="userId")
     private Long userId;
-
     private String userEmail;
 
     private String userName; // 사용자가 회원가입 시 입력한 사용자 이름
