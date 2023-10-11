@@ -1,10 +1,18 @@
 package com.team7.be.domain.service;
 
+import com.team7.be.domain.controller.response.AvailableScheduleListResponse;
 import com.team7.be.domain.controller.response.AvailableScheduleResponse;
+import com.team7.be.domain.entity.Schedule;
+import com.team7.be.domain.entity.UserGroup;
 import com.team7.be.domain.entity.availableSchedule.AvailableSchedule;
 import com.team7.be.domain.repository.AvailableScheduleRepository;
+
+import com.team7.be.domain.repository.ScheduleRepository;
+import com.team7.be.domain.repository.UserGroupRepository;
 import com.team7.be.domain.service.dto.AvailableScheduleDto;
 import com.team7.be.domain.service.dto.AvailableScheduleListDto;
+import com.team7.be.domain.service.dto.CreateGroupScheduleDto;
+import com.team7.be.global.exception.GroupNotFoundException;
 import com.team7.be.global.exception.SaveScheduleException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,27 +23,46 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
+// import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = false)
 public class AvailableScheduleService {
     private final AvailableScheduleRepository availableScheduleRepository;
+    private final UserGroupRepository userGroupRepository;
+    private final ScheduleRepository scheduleRepository;
 
     @Transactional
-    public void saveAvailableSchedule(AvailableScheduleListDto availableScheduleListDto) {
-        try {
-            List<AvailableSchedule> schedules = availableScheduleListDto.getAvailableScheduleDtoList().stream()
-                    .map(schedule -> AvailableSchedule.builder()
-                            .groupId(schedule.getGroupId())
-                            .availableStartTime(schedule.getAvailableStartTime())
-                            .availableEndTime(schedule.getAvailableEndTime())
-                            .build())
-                    .collect(Collectors.toList());
 
-            availableScheduleRepository.saveAll(schedules);
-        } catch (Exception e) {
+    public void saveAvailableSchedule(AvailableScheduleListDto availableScheduleListDto){
+        List<LocalDateTime> availableScheduleList = new ArrayList<>();
+
+        try {
+            availableScheduleListDto.getAvailableScheduleDtoList().forEach(
+                    availableScheduleDto -> {
+                        availableScheduleList.add(availableScheduleDto.getAvailableTime());
+                    }
+            );
+        }catch (Exception e){
+            throw new SaveScheduleException("가능 시간을 불러오는데 실패하였습니다.");
+        }
+
+        try {
+
+            availableScheduleListDto.getAvailableScheduleDtoList().forEach(
+                    (schedule -> {
+                        AvailableSchedule availableSchedule = AvailableSchedule.builder()
+                                .availableScheduleId(availableScheduleListDto.getScheduleId())
+                                .userId(availableScheduleListDto.getUserId())
+                                .groupId(availableScheduleListDto.getGroupId())
+                                .build();
+
+                        availableScheduleRepository.save(availableSchedule);
+                    })
+            );
+        }catch (Exception e){
             throw new SaveScheduleException("저장에 실패하였습니다.");
         }
     }
@@ -50,53 +77,42 @@ public class AvailableScheduleService {
                 .collect(Collectors.toList());
     }
 
-    public List<AvailableScheduleResponse> getAvailableScheduleList(Long groupId, Long scheduleId) {
-        // 그룹 ID와 스케줄 ID를 기반으로 스케줄 목록을 조회
-        List<AvailableSchedule> schedules = availableScheduleRepository.findByGroupIdAndScheduleId(groupId, scheduleId);
+   
+    public AvailableScheduleListResponse getAvailableGroupSchedule(Long groupId,Long scheduleId){
+        List<AvailableSchedule> getGroupScheduleList = availableScheduleRepository.findByAvailableScheduleIdAndGroupId(scheduleId,groupId);
+        List<AvailableScheduleResponse> availableScheduleResponsesList = new ArrayList<>();
+        getGroupScheduleList.forEach(
+                (availableSchedule -> {
+                    availableScheduleResponsesList.add(
+                            AvailableScheduleResponse.builder()
+                                    .availableTime(availableSchedule.getAvailableTime())
+                                    .build()
+                    );
+                })
+        );
 
-        // 비어있는 시간대를 찾기 위한 로직
-        List<AvailableScheduleResponse> availableTimes = new ArrayList<>();
-        LocalDateTime lastEndTime = schedules.get(0).getAvailableStartTime(); // 첫 스케줄 시작 시간을 초기값으로
 
-        for (int i = 0; i < schedules.size(); i++) {
-            AvailableSchedule currentSchedule = schedules.get(i);
-            if (!lastEndTime.isEqual(currentSchedule.getAvailableStartTime())) {
-                // 빈 시간대 발견
-                long hoursAvailable = Duration.between(lastEndTime, currentSchedule.getAvailableStartTime()).toHours();
-                availableTimes.add(AvailableScheduleResponse.builder()
-                        .availableStartTime(lastEndTime)
-                        .availableNum((int) hoursAvailable)
-                        .build());
-            }
-            lastEndTime = currentSchedule.getAvailableEndTime();
-        }
-
-        return availableTimes;
+        return AvailableScheduleListResponse.builder()
+                .availableScheduleResponseList(availableScheduleResponsesList).build();
     }
 
-    public AvailableScheduleResponse getAvailableScheduleResult(Long groupId, Long scheduleId) {
-        List<AvailableSchedule> schedules = availableScheduleRepository.findByGroupIdAndScheduleId(groupId, scheduleId);
 
-        // 스케줄을 시작 시간 기준으로 정렬
-        schedules.sort(Comparator.comparing(AvailableSchedule::getAvailableStartTime));
+    public Long createGroupSchedule(Long groupId, CreateGroupScheduleDto createGroupScheduleDto) {
 
-        for (int i = 0; i < schedules.size() - 1; i++) {
-            LocalDateTime endOfCurrentSchedule = schedules.get(i).getAvailableEndTime();
-            LocalDateTime startOfNextSchedule = schedules.get(i + 1).getAvailableStartTime();
-
-            // 만약 현재 스케줄의 끝나는 시간과 다음 스케줄의 시작 시간 사이에 간격이 있다면
-            if (!endOfCurrentSchedule.isEqual(startOfNextSchedule)) {
-                long hoursAvailable = Duration.between(endOfCurrentSchedule, startOfNextSchedule).toHours();
-                return AvailableScheduleResponse.builder()
-                        .availableStartTime(endOfCurrentSchedule)
-                        .availableEndTime(startOfNextSchedule)
-                        .availableNum((int) hoursAvailable)
-                        .build();
-            }
+        Optional<UserGroup> groupOptional = userGroupRepository.findById(groupId);
+        if (groupOptional.isEmpty()) {
+            throw new GroupNotFoundException("그룹이 존재하지 않습니다.");
         }
+        UserGroup group = groupOptional.get();
+        Schedule schedule = Schedule.builder()
+                .userGroupId(group)
+                .date(createGroupScheduleDto.getDate())
+                .scheduleName(createGroupScheduleDto.getScheduleName())
+                .build();
 
-        return null;  // 혹은 예외처리 가능
+        Schedule savedSchedule = scheduleRepository.save(schedule);
+
+        return savedSchedule.getScheduleId();
     }
-
 
 }

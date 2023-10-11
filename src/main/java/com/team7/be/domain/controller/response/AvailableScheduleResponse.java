@@ -17,12 +17,7 @@ import java.time.LocalDateTime;
 public class AvailableScheduleResponse {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd-HH:mm:ss", timezone = "Asia/Seoul")
-    private LocalDateTime availableStartTime;
-
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd-HH:mm:ss", timezone = "Asia/Seoul")
-    private LocalDateTime availableEndTime;
-
+    private LocalDateTime availableTime;
     private Integer availableNum;
 
 }

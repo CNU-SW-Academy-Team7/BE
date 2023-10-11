@@ -18,19 +18,21 @@ public class AvailableScheduleListRequest {
 
     private List<AvailableScheduleRequest> availableScheduleList;
 
-    public AvailableScheduleListDto toDto(Long groupId){
+
+    public AvailableScheduleListDto toDto(Long groupId, Long scheduleId, Long userId){
         List<AvailableScheduleDto> availableScheduleDtoList = new ArrayList<>();
 
         availableScheduleList.forEach(
                 (schedule ->{
-                    availableScheduleDtoList.add(schedule.toDto(groupId)
-                    );
+                    availableScheduleDtoList.add(schedule.toDto());
                 })
         );
 
         return AvailableScheduleListDto.builder()
                 .availableScheduleDtoList(availableScheduleDtoList)
-                .userName(this.userName)
+                .userId(userId)
+                .scheduleId(scheduleId)
+                .groupId(groupId)
                 .build();
     }
 }

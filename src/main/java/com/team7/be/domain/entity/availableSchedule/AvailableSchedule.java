@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -17,15 +18,14 @@ public class AvailableSchedule {
     @Column(name="availableScheduleId")
     private Long availableScheduleId;
 
-    private String userName;
+    @JoinColumn(name = "userId")
+    private Long userId;
 
 //  @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id")
     private Long groupId;
 
-    @JoinColumn(name = "scheduleId")
-    private Long scheduleId;
 
-    private LocalDateTime availableStartTime;
-    private LocalDateTime availableEndTime;
+    @Column(name = "local_date_time")
+    private LocalDateTime availableTime;
 }
