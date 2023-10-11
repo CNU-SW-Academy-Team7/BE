@@ -1,6 +1,7 @@
 package com.team7.be.domain.controller;
 
 import com.team7.be.domain.controller.request.availableSchedule.AvailableScheduleListRequest;
+import com.team7.be.domain.controller.response.AvailableScheduleListResponse;
 import com.team7.be.domain.controller.request.group.CreateGroupScheduleRequest;
 import com.team7.be.domain.controller.response.AvailableScheduleResponse;
 import com.team7.be.domain.controller.response.CreateGroupScheduleResponse;
@@ -35,8 +36,8 @@ public class AvailableScheduleController {
     }
 
     @GetMapping("/availableSchedule/{groupId}")
-    public ResponseEntity<List<AvailableScheduleResponse>> getCheckedSchedule(@PathVariable Long groupId){
-        List<AvailableScheduleResponse> availableSchedulList = availableScheduleService.getAvailableSchedule(groupId);
+    public ResponseEntity<AvailableScheduleListResponse> getCheckedSchedule(@PathVariable Long availableSchedule, @PathVariable Long groupId){
+        AvailableScheduleListResponse availableSchedulList = availableScheduleService.getAvailableGroupSchedule(availableSchedule, groupId);
         return ResponseEntity.ok(availableSchedulList);
     }
 
