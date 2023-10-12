@@ -6,19 +6,17 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface AvailableScheduleRepository extends JpaRepository<AvailableSchedule,Long> {
 
     List<AvailableSchedule> findByAvailableScheduleIdAndGroupId(@Param("availableScheduleId")Long availableScheduleId, @Param("groupId")Long groupId);
 
-    List<AvailableSchedule> findByGroupId(@Param("groupId")Long groupId);
 
-    List<AvailableSchedule> findByAvailableScheduleId(@Param("availableScheduleId")Long availableScheduleId);
+    AvailableSchedule findAvailableScheduleByUserId(@Param("userId")Long userId);
 
-    List<AvailableSchedule> findByGroupIdAndScheduleId(@Param("groupId") Long groupId, @Param("scheduleId") Long scheduleId);
 
-    List<AvailableSchedule> findByUserName(@Param("userName")String userName);
 
 
 }

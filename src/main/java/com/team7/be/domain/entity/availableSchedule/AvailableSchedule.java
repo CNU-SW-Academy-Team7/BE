@@ -18,15 +18,15 @@ public class AvailableSchedule {
     @Column(name="availableScheduleId")
     private Long availableScheduleId;
 
-    @JoinColumn(name = "scheduleId")
-    private Long scheduleId;
+    @JoinColumn(name = "groupScheduleId")
+    private Long groupScheduleId;
 
     @JoinColumn(name = "userId")
     private Long userId;
 
 //  @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "userGroupId")
-    private Long groupId;
+    private Long userGroupId;
 
 
     @Column(name = "availableTime")
