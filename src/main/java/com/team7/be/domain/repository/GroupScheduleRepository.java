@@ -10,6 +10,7 @@ import java.util.Optional;
 public interface GroupScheduleRepository extends JpaRepository<GroupSchedule,Long> {
     Optional<GroupSchedule> findByGroupScheduleId(@Param("groupScheduleId")Long groupScheduleId);
 
+    Optional<GroupSchedule> findByUserGroupId(@Param("userGroupId")Long userGroupId);
 //    Optional<GroupSchedule> findByUserGroupId(Long userGroupId);
 
 //    Optional<GroupSchedule> findByGroupScheduleIdAndUserGroupId(Long groupScheduleId,Long userGroupId);

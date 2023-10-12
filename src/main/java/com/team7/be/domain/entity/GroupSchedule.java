@@ -17,9 +17,9 @@ public class GroupSchedule {
     @Column(name="groupScheduleId")
     private Long groupScheduleId; // PK
 
-    @ManyToOne
+//    @ManyToOne
     @JoinColumn(name="userGroupId")
-    private UserGroup userGroupId; // UserGroup 테이블의 FK
+    private Long userGroupId; // UserGroup 테이블의 FK
 
     @Column(name = "scheduleDate")
     private LocalDate scheduleDate;

@@ -28,7 +28,7 @@ public class GroupScheduleService {
 
         UserGroup group = groupOptional.get();
         GroupSchedule groupSchedule = GroupSchedule.builder()
-                .userGroupId(group)
+                .userGroupId(groupId)
                 .scheduleDate(groupScheduleDto.getScheduleDate())
                 .scheduleName(groupScheduleDto.getScheduleName())
                 .build();
