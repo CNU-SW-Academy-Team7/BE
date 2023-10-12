@@ -3,8 +3,10 @@ package com.team7.be.domain.controller;
 import com.team7.be.domain.controller.request.availableSchedule.AvailableScheduleListRequest;
 import com.team7.be.domain.controller.request.groupSchedule.CreateGroupScheduleRequest;
 import com.team7.be.domain.controller.response.availableSchedule.AvailableScheduleListResponse;
+import com.team7.be.domain.controller.response.availableSchedule.AvailableScheduleResultResponse;
 import com.team7.be.domain.controller.response.groupSchedule.CreateGroupScheduleResponse;
 import com.team7.be.domain.service.AvailableScheduleService;
+import com.team7.be.domain.service.UserGroupService;
 import com.team7.be.domain.service.dto.GroupScheduleDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,23 +20,29 @@ import java.net.URI;
 public class AvailableScheduleController {
 
     private final AvailableScheduleService availableScheduleService;
+    private final UserGroupService userGroupService;
 
-    @PostMapping("/availableSchedule/{groupId}/{scheduleId}/{userId}")
-    public ResponseEntity<Void> saveCheckedSchedule(@PathVariable Long groupId,@PathVariable Long scheduleId, @PathVariable Long userId, @RequestBody AvailableScheduleListRequest availableScheduleListRequest){
-        availableScheduleService.saveAvailableSchedule(availableScheduleListRequest.toDto(groupId, scheduleId, userId));
+    @PostMapping("/availableSchedule/{groupId}/{availableScheduleId}/{userId}")
+    public ResponseEntity<Void> saveAvailableSchedule(@PathVariable Long groupId,@PathVariable Long availableScheduleId, @PathVariable Long userId, @RequestBody AvailableScheduleListRequest availableScheduleListRequest){
+        availableScheduleService.saveAvailableSchedule(availableScheduleListRequest.toDto(groupId, availableScheduleId, userId));
+        userGroupService.enrollGroup(userId,groupId);
 
         URI uri = UriComponentsBuilder.fromPath("/schedule/{groupId}")
                 .buildAndExpand(groupId)
                 .toUri();
-
-        System.out.println();
         return ResponseEntity.created(uri).build();
     }
 
-    @GetMapping("/availableSchedule/{groupId}")
-    public ResponseEntity<AvailableScheduleListResponse> getCheckedSchedule(@PathVariable Long availableSchedule, @PathVariable Long groupId){
-        AvailableScheduleListResponse availableSchedulList = availableScheduleService.getAvailableGroupSchedule(availableSchedule, groupId);
-        return ResponseEntity.ok(availableSchedulList);
+    @GetMapping("/availableScheduleList/{groupId}/{availableScheduleId}")
+    public ResponseEntity<AvailableScheduleListResponse> getAvailableSchedule(@PathVariable Long availableScheduleId, @PathVariable Long groupId){
+        AvailableScheduleListResponse availableScheduleList = availableScheduleService.getAvailableGroupSchedule(availableScheduleId, groupId);
+        return ResponseEntity.ok(availableScheduleList);
+    }
+
+    @GetMapping("/availableScheduleResult/{groupId}/{availableScheduleId}")
+    public ResponseEntity<AvailableScheduleResultResponse> getAvailableScheduleResult(@PathVariable Long availableScheduleId, @PathVariable Long groupId){
+        AvailableScheduleResultResponse availableScheduleResultResponse = availableScheduleService.getResult(availableScheduleId, groupId);
+        return ResponseEntity.ok(availableScheduleResultResponse);
     }
 
 
