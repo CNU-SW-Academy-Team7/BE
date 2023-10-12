@@ -57,7 +57,7 @@ public class AvailableScheduleService {
         }
     }
 
-   
+
     public AvailableScheduleListResponse getAvailableGroupSchedule(Long groupId,Long scheduleId){
         List<AvailableSchedule> getGroupScheduleList = availableScheduleRepository.findByAvailableScheduleIdAndGroupId(scheduleId,groupId);
         List<AvailableScheduleResponse> availableScheduleResponsesList = new ArrayList<>();
@@ -70,9 +70,13 @@ public class AvailableScheduleService {
                     );
                 })
         );
+
+
         return AvailableScheduleListResponse.builder()
                 .availableScheduleResponseList(availableScheduleResponsesList).build();
-
     }
+
+
+
 
 }

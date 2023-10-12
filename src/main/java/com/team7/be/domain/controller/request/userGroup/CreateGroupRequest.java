@@ -1,4 +1,4 @@
-package com.team7.be.domain.controller.request.group;
+package com.team7.be.domain.controller.request.userGroup;
 
 import lombok.*;
 

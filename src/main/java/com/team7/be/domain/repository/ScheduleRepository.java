@@ -15,4 +15,6 @@ public interface ScheduleRepository extends JpaRepository<Schedule,Long> {
     List<Schedule> findByMemberId_userId(Long id);
     List<Schedule> findByUserGroupId_GroupId(Long id);
 
+    Optional<Schedule> findByUserId(@Param("userId")Long userId);
+
 }
