@@ -13,8 +13,9 @@ public interface GroupScheduleRepository extends JpaRepository<GroupSchedule,Lon
 
     Optional<GroupSchedule> findByUserGroupId(@Param("userGroupId")Long userGroupId);
 
-    //    Optional<GroupSchedule> findByUserGroupId(Long userGroupId);
 
-//    Optional<GroupSchedule> findByGroupScheduleIdAndUserGroupId(Long groupScheduleId,Long userGroupId);
+
+    List<GroupSchedule> findByUserId(@Param("userId")Long userId);
+
 
 }

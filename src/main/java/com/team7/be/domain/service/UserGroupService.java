@@ -36,7 +36,7 @@ public class UserGroupService {
     public String enrollGroup(Long userId,Long userGroupId){
         UserGroup userGroup = UserGroup.builder()
                 .userGroupId(userGroupId)
-                .userGroupName(userGroupRepository.findByUserGroupId(userGroupId).getUserGroupName())
+                .userGroupName(userGroupRepository.findUserGroupByUserGroupId(userGroupId).getUserGroupName())
                 .userId(userId)
                 .build();
 

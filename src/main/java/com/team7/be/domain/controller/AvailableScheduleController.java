@@ -6,6 +6,7 @@ import com.team7.be.domain.controller.response.availableSchedule.AvailableSchedu
 import com.team7.be.domain.controller.response.availableSchedule.AvailableScheduleResultResponse;
 import com.team7.be.domain.controller.response.groupSchedule.CreateGroupScheduleResponse;
 import com.team7.be.domain.service.AvailableScheduleService;
+import com.team7.be.domain.service.GroupScheduleService;
 import com.team7.be.domain.service.UserGroupService;
 import com.team7.be.domain.service.dto.GroupScheduleDto;
 import lombok.RequiredArgsConstructor;
@@ -21,11 +22,13 @@ public class AvailableScheduleController {
 
     private final AvailableScheduleService availableScheduleService;
     private final UserGroupService userGroupService;
+    private final GroupScheduleService groupScheduleService;
 
     @PostMapping("/availableSchedule/{groupId}/{availableScheduleId}/{userId}")
     public ResponseEntity<Void> saveAvailableSchedule(@PathVariable Long groupId,@PathVariable Long availableScheduleId, @PathVariable Long userId, @RequestBody AvailableScheduleListRequest availableScheduleListRequest){
         availableScheduleService.saveAvailableSchedule(availableScheduleListRequest.toDto(groupId, availableScheduleId, userId));
         userGroupService.enrollGroup(userId,groupId);
+        groupScheduleService.enrollGroupSchedule(groupId,availableScheduleId,userId);
 
         URI uri = UriComponentsBuilder.fromPath("/schedule/{groupId}")
                 .buildAndExpand(groupId)

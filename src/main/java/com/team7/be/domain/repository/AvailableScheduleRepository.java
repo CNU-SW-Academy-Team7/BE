@@ -11,10 +11,13 @@ import java.util.Optional;
 @Repository
 public interface AvailableScheduleRepository extends JpaRepository<AvailableSchedule,Long> {
 
-    List<AvailableSchedule> findByAvailableScheduleIdAndUserGroupId(@Param("availableScheduleId")Long availableScheduleId, @Param("groupId")Long groupId);
-    Optional<AvailableSchedule> findAvailableScheduleByUserId(@Param("userId")Long userId);
+    List<AvailableSchedule> findByGroupScheduleIdAndUserGroupId(@Param("groupScheduleId")Long groupScheduleId,@Param("userGroupId")Long userGroupId);
+    List<AvailableSchedule> findAvailableScheduleByUserId(@Param("userId")Long userId);
 
+    Optional<AvailableSchedule> findFirstByUserId(@Param("userId")Long userId);
 
+    Optional<AvailableSchedule> findByAvailableScheduleId(@Param("availableScheduleId")Long availableScheduleId);
 
+    Optional<AvailableSchedule> findFirstByAvailableScheduleIdAndUserGroupId(@Param("availableScheduleId")Long availableScheduleId,@Param("userGroupId")Long userGroupId);
 
 }

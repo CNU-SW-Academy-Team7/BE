@@ -12,12 +12,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 // import java.util.stream.Collectors;
 
 
@@ -44,14 +42,15 @@ public class AvailableScheduleService {
         }
 
         try {
-            availableScheduleListDto.getAvailableScheduleDtoList().forEach(
+            availableScheduleList.forEach(
                     (schedule -> {
                         AvailableSchedule availableSchedule = AvailableSchedule.builder()
                                 .groupScheduleId(availableScheduleListDto.getGroupScheduleId())
                                 .userGroupId(availableScheduleListDto.getUserGroupId())
                                 .userId(availableScheduleListDto.getUserId())
-                                .availableTime(schedule.getAvailableTime())
+                                .availableTime(schedule)
                                 .build();
+
 
                         availableScheduleRepository.save(availableSchedule);
                     })
@@ -81,31 +80,50 @@ public class AvailableScheduleService {
 
 
 
+
     public AvailableScheduleResultResponse getResult(Long scheduleId,Long groupId){
         Map<LocalDateTime,Integer> resultMap = getResultMap(groupId,scheduleId);
-        int max=getMaxValue(resultMap);
 
-        LocalDateTime startAvailableTime=LocalDateTime.MIN;
-        LocalDateTime endAvailableTime=LocalDateTime.MIN;
+        int temp_index=0;
+        int maxSum =Integer.MIN_VALUE;
+        int currentSum = Integer.MIN_VALUE;
+        LocalDateTime maxStart=LocalDateTime.MIN;
+        LocalDateTime maxEnd= LocalDateTime.MIN;
+        LocalDateTime currentStart=LocalDateTime.MIN;
+        LocalDateTime currentEnd=LocalDateTime.MIN;
 
         for (Map.Entry<LocalDateTime,Integer> entry : resultMap.entrySet()){
-           if(entry.getValue()==max){
-               if(entry.getKey().isAfter(startAvailableTime)) startAvailableTime = entry.getKey();
-               endAvailableTime = entry.getKey();
-           } else if (entry.getValue()<max && entry.getKey().minus(30, ChronoUnit.MINUTES).isEqual(endAvailableTime)){
-                return AvailableScheduleResultResponse.builder()
-                        .availableStartTime(startAvailableTime)
-                        .availableEndTime(endAvailableTime)
-                        .availableNum(max)
-                        .build();
 
-           }
+            if(temp_index==0){
+                maxStart = maxEnd = currentStart = currentEnd = entry.getKey();
+                maxSum=currentSum=entry.getValue();
+                temp_index++;
+            }
+
+            if(entry.getValue().compareTo(resultMap.get(currentEnd))==0 ) {
+                currentEnd = entry.getKey();
+            }else{
+                currentSum = entry.getValue();
+                currentStart = entry.getKey();
+                currentEnd = entry.getKey();
+            }
+
+            if(currentSum>=maxSum){
+                maxSum = currentSum;
+                maxStart = currentStart;
+                maxEnd = currentEnd;
+            }
         }
-        return null;
+
+        return AvailableScheduleResultResponse.builder()
+                        .availableStartTime(maxStart)
+                        .availableEndTime(maxEnd)
+                        .availableNum(maxSum)
+                        .build();
     }
 
     public Map<LocalDateTime,Integer> getResultMap(Long groupId, Long scheduleId){
-        List<AvailableSchedule> getGroupScheduleList = availableScheduleRepository.findByAvailableScheduleIdAndUserGroupId(scheduleId,groupId);
+        List<AvailableSchedule> getGroupScheduleList = availableScheduleRepository.findByGroupScheduleIdAndUserGroupId(scheduleId,groupId);
         Map<LocalDateTime,Integer> resultMap = new HashMap<>();
 
         getGroupScheduleList.forEach(
@@ -117,22 +135,13 @@ public class AvailableScheduleService {
                         int count = resultMap.get(currentDateValue)+1;
                         resultMap.put(currentDateValue,count);
                     }
-
                 });
 
-        return resultMap;
+        Map<LocalDateTime,Integer> sortedResultMap = new TreeMap<>(resultMap);
+        return sortedResultMap;
     }
 
-    public int getMaxValue(Map<LocalDateTime,Integer> inputMap){
-        int max=Integer.MIN_VALUE;
 
-        for (Map.Entry<LocalDateTime,Integer> entry : inputMap.entrySet()){
-            if(entry.getValue()>max){
-                max=entry.getValue();
-            }
-        }
-        return max;
-    }
 
 
 
