@@ -9,11 +9,7 @@ import com.team7.be.domain.repository.UserGroupRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
-import java.util.TimeZone;
 
 @Service
 @RequiredArgsConstructor
@@ -24,8 +20,11 @@ public class HomeService {
     private final UserGroupRepository userGroupRepository;
 
     public HomeResponse getHomeInfo(Long userId) {
-        AvailableSchedule availableSchedule =availableScheduleRepository.findAvailableScheduleByUserId(userId);
-        Long availableUserGroupId = availableSchedule.getUserGroupId();
+        Optional<AvailableSchedule> availableScheduleOptional =availableScheduleRepository.findAvailableScheduleByUserId(userId);
+        if(availableScheduleOptional.isEmpty()) throw new RuntimeException();
+
+        Long availableUserGroupId = availableScheduleOptional.get().getUserGroupId();
+
         Optional<GroupSchedule> groupScheduleOptional = groupScheduleRepository.findByUserGroupId(availableUserGroupId);
         if(groupScheduleOptional.isEmpty()){
             throw new RuntimeException();

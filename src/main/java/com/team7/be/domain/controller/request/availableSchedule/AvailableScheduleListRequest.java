@@ -31,8 +31,8 @@ public class AvailableScheduleListRequest {
         return AvailableScheduleListDto.builder()
                 .availableScheduleDtoList(availableScheduleDtoList)
                 .userId(userId)
-                .scheduleId(scheduleId)
-                .groupId(groupId)
+                .groupScheduleId(scheduleId)
+                .userGroupId(groupId)
                 .build();
     }
 }
