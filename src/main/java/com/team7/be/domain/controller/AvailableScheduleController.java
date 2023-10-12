@@ -2,6 +2,7 @@ package com.team7.be.domain.controller;
 
 import com.team7.be.domain.controller.request.availableSchedule.AvailableScheduleListRequest;
 import com.team7.be.domain.controller.response.availableSchedule.AvailableScheduleListResponse;
+import com.team7.be.domain.controller.response.AvailableScheduleResponse;
 import com.team7.be.domain.service.AvailableScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,22 +31,9 @@ public class AvailableScheduleController {
     }
 
     @GetMapping("/availableSchedule/{groupId}")
-    public ResponseEntity<AvailableScheduleListResponse> getCheckedSchedule(@PathVariable Long availableSchedule, @PathVariable Long groupId){
-        AvailableScheduleListResponse availableSchedulList = availableScheduleService.getAvailableGroupSchedule(availableSchedule, groupId);
+
+    public ResponseEntity<List<AvailableScheduleResponse>> getCheckedSchedule(@PathVariable Long groupId){
+        List<AvailableScheduleResponse> availableSchedulList = availableScheduleService.getAvailableSchedule(groupId);
         return ResponseEntity.ok(availableSchedulList);
     }
-
-//    @GetMapping("/availableScheduleList/{groupId}/{scheduleId}")
-//    public ResponseEntity<List<AvailableScheduleResponse>> getAvailableScheduleList(@PathVariable Long groupId, @PathVariable Long scheduleId) {
-//        List<AvailableScheduleResponse> availableScheduleList = availableScheduleService.getAvailableScheduleList(groupId, scheduleId);
-//        return ResponseEntity.ok(availableScheduleList);
-//    }
-//
-//    @GetMapping("/availableScheduleResult/{groupId}/{scheduleId}")
-//    public ResponseEntity<AvailableScheduleResponse> getAvailableScheduleResult(@PathVariable Long groupId, @PathVariable Long scheduleId) {
-//        AvailableScheduleResponse availableResult = availableScheduleService.getAvailableScheduleResult(groupId, scheduleId);
-//        return ResponseEntity.ok(availableResult);
-//    }
-
-
 }

@@ -70,13 +70,9 @@ public class AvailableScheduleService {
                     );
                 })
         );
-
-
         return AvailableScheduleListResponse.builder()
                 .availableScheduleResponseList(availableScheduleResponsesList).build();
+
     }
-
-
-
 
 }

@@ -17,4 +17,5 @@ public class AvailableScheduleListDto {
     private Long scheduleId;
     private Long groupId;
 
+
 }

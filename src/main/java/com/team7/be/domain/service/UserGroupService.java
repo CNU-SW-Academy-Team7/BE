@@ -27,7 +27,7 @@ public class UserGroupService {
     }
     //그룹 id로 탐색
 
-    public Optional<UserGroup> findGroupById(Long userGroupId){
+    public UserGroup findGroupById(Long userGroupId){
         return userGroupRepository.findByUserGroupId(userGroupId);
     }
     //그룹 이름으로 탐색
@@ -35,4 +35,6 @@ public class UserGroupService {
     public Optional<UserGroup> findGroupByName(String groupName){
         return userGroupRepository.findByGroupName(groupName);
     }
+
+
 }
