@@ -16,9 +16,10 @@ public class UserGroup {
     private Long userGroupId;
 
     //그룹 이름,UNIQUE제약조건 설정
-    @Column(name="groupName",unique = true)
-    private String groupName;
-    
-    //추후 추가 기능을 위한 추가적인 정보 필요
+    @Column(name="userGroupName",unique = true)
+    private String userGroupName;
+
+    @JoinColumn(name="userId")
+    private Long userId;
 
 }

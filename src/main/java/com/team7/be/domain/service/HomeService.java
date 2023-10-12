@@ -32,7 +32,7 @@ public class HomeService {
         GroupSchedule groupSchedule = groupScheduleOptional.get();
 
         return HomeResponse.builder()
-                .groupName(userGroupRepository.findByUserGroupId(availableUserGroupId).getGroupName())
+                .groupName(userGroupRepository.findByUserGroupId(availableUserGroupId).getUserGroupName())
                 .scheduleDate(groupSchedule.getScheduleDate())
                 .scheduleName(groupSchedule.getScheduleName())
                 .build();

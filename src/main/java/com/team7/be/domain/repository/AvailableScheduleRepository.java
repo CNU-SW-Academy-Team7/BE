@@ -12,8 +12,6 @@ import java.util.Optional;
 public interface AvailableScheduleRepository extends JpaRepository<AvailableSchedule,Long> {
 
     List<AvailableSchedule> findByAvailableScheduleIdAndUserGroupId(@Param("availableScheduleId")Long availableScheduleId, @Param("groupId")Long groupId);
-
-
     Optional<AvailableSchedule> findAvailableScheduleByUserId(@Param("userId")Long userId);
 
 

@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -18,7 +19,8 @@ public interface UserGroupRepository extends JpaRepository<UserGroup,Long> {
     void deleteByUserGroupId(@Param("userGroupId")Long groupId);
 
     //그룹 이름으로 그룹을 찿는 부분 그룹이름은 unique제약속성을 가짐.
-    Optional<UserGroup> findByGroupName(@Param("groupName") String groupName);
 
+    List<UserGroup> findByUserId(@Param("userId")Long userId);
 
+    List<UserGroup> findByUserGroupName(@Param("userGroupName")String userGroupName);
 }

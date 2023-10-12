@@ -24,6 +24,8 @@ public class GroupSchedule {
     @Column(name = "scheduleDate")
     private LocalDate scheduleDate;
 
+    @JoinColumn(name="userId")
+    private Long userId;
 
     private String scheduleName;
 }
