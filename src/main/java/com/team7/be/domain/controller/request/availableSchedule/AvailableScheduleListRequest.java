@@ -1,9 +1,12 @@
 package com.team7.be.domain.controller.request.availableSchedule;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.team7.be.domain.service.dto.AvailableScheduleDto;
 import com.team7.be.domain.service.dto.AvailableScheduleListDto;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,9 +17,9 @@ import java.util.List;
 @Builder
 public class AvailableScheduleListRequest {
 
-    private String userName;
-
-    private List<AvailableScheduleRequest> availableScheduleList;
+    @DateTimeFormat(pattern = "yyyy-MM-dd-HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd-HH:mm:ss", timezone = "Asia/Seoul")
+    private List<LocalDateTime> availableScheduleList;
 
 
     public AvailableScheduleListDto toDto(Long groupId, Long scheduleId, Long userId){
@@ -24,7 +27,7 @@ public class AvailableScheduleListRequest {
 
         availableScheduleList.forEach(
                 (schedule ->{
-                    availableScheduleDtoList.add(schedule.toDto());
+                    availableScheduleDtoList.add(AvailableScheduleDto.builder().availableTime(schedule).build());
                 })
         );
 

@@ -15,6 +15,6 @@ import java.time.LocalDateTime;
 
 public class SignInResponse {
 
-    private String userName;
+    private Long userId;
 
 }

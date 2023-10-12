@@ -64,7 +64,7 @@ public class MemberService {
             throw new PasswordMismatchException("비밀번호가 일치하지 않습니다.");
         }
         return SignInResponse.builder()
-                .userName(findMember.getUserName())
+                .userId(findMember.getUserId())
                 .build();
     }
 
