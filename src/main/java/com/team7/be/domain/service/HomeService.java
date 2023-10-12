@@ -27,16 +27,16 @@ public class HomeService {
         Optional<AvailableSchedule> availableScheduleOptional =availableScheduleRepository.findFirstByUserId(userId);
         if(availableScheduleOptional.isEmpty()) throw new RuntimeException();
 
-        Long availableUserGroupId = availableScheduleOptional.get().getUserGroupId();
+        Long groupScheduleId = availableScheduleOptional.get().getGroupScheduleId();
 
-        Optional<GroupSchedule> groupScheduleOptional = groupScheduleRepository.findByUserGroupId(availableUserGroupId);
+        Optional<GroupSchedule> groupScheduleOptional = groupScheduleRepository.findByGroupScheduleId(groupScheduleId);
         if(groupScheduleOptional.isEmpty()){
             throw new RuntimeException();
         }
         GroupSchedule groupSchedule = groupScheduleOptional.get();
 
         return HomeResponse.builder()
-                .groupName(userGroupRepository.findByUserGroupId(availableUserGroupId).get().getUserGroupName())
+                .groupName(userGroupRepository.findByUserGroupId(groupSchedule.getUserGroupId()).get().getUserGroupName())
                 .scheduleDate(groupSchedule.getScheduleDate())
                 .scheduleName(groupSchedule.getScheduleName())
                 .build();
