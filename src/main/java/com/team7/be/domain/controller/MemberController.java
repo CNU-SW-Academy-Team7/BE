@@ -31,14 +31,6 @@ public class MemberController {
         return ResponseEntity.created(uri).build();
     }
 
-//    @PostMapping("/signIn")
-//    public ResponseEntity<String> signIn(@RequestBody SignInRequest signInRequest) {
-//        Optional<Member> findMember = memberService.signIn(signInRequest);
-//        if (findMember.isPresent()) {
-////            return ResponseEntity.ok("로그인 성공");
-//            return ResponseEntity.ok(findMember.get().getUserId()); // 사용자 id 반환
-//        } else return ResponseEntity.badRequest().body("로그인 실패");
-//    }
 
     @PostMapping("/signIn")
     public ResponseEntity<SignInResponse> signIn(@RequestBody SignInRequest signInRequest) {

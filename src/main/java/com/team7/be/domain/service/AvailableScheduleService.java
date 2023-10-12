@@ -40,13 +40,13 @@ public class AvailableScheduleService {
         }
 
         try {
-
             availableScheduleListDto.getAvailableScheduleDtoList().forEach(
                     (schedule -> {
                         AvailableSchedule availableSchedule = AvailableSchedule.builder()
-                                .availableScheduleId(availableScheduleListDto.getScheduleId())
+                                .groupScheduleId(availableScheduleListDto.getGroupScheduleId())
+                                .userGroupId(availableScheduleListDto.getUserGroupId())
                                 .userId(availableScheduleListDto.getUserId())
-                                .groupId(availableScheduleListDto.getGroupId())
+                                .availableTime(schedule.getAvailableTime())
                                 .build();
 
                         availableScheduleRepository.save(availableSchedule);
@@ -59,7 +59,7 @@ public class AvailableScheduleService {
 
 
     public AvailableScheduleListResponse getAvailableGroupSchedule(Long groupId,Long scheduleId){
-        List<AvailableSchedule> getGroupScheduleList = availableScheduleRepository.findByAvailableScheduleIdAndGroupId(scheduleId,groupId);
+        List<AvailableSchedule> getGroupScheduleList = availableScheduleRepository.findByAvailableScheduleIdAndUserGroupId(scheduleId,groupId);
         List<AvailableScheduleResponse> availableScheduleResponsesList = new ArrayList<>();
         getGroupScheduleList.forEach(
                 (availableSchedule -> {

@@ -14,8 +14,8 @@ import java.util.List;
 public class AvailableScheduleListDto {
     private List<AvailableScheduleDto> availableScheduleDtoList;
     private Long userId;
-    private Long scheduleId;
-    private Long groupId;
+    private Long groupScheduleId;
+    private Long userGroupId;
 
 
 }

@@ -1,8 +1,11 @@
 package com.team7.be.domain.controller;
 
 import com.team7.be.domain.controller.request.availableSchedule.AvailableScheduleListRequest;
+import com.team7.be.domain.controller.request.groupSchedule.CreateGroupScheduleRequest;
 import com.team7.be.domain.controller.response.availableSchedule.AvailableScheduleListResponse;
+import com.team7.be.domain.controller.response.groupSchedule.CreateGroupScheduleResponse;
 import com.team7.be.domain.service.AvailableScheduleService;
+import com.team7.be.domain.service.dto.GroupScheduleDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,17 +37,6 @@ public class AvailableScheduleController {
         return ResponseEntity.ok(availableSchedulList);
     }
 
-//    @GetMapping("/availableScheduleList/{groupId}/{scheduleId}")
-//    public ResponseEntity<List<AvailableScheduleResponse>> getAvailableScheduleList(@PathVariable Long groupId, @PathVariable Long scheduleId) {
-//        List<AvailableScheduleResponse> availableScheduleList = availableScheduleService.getAvailableScheduleList(groupId, scheduleId);
-//        return ResponseEntity.ok(availableScheduleList);
-//    }
-//
-//    @GetMapping("/availableScheduleResult/{groupId}/{scheduleId}")
-//    public ResponseEntity<AvailableScheduleResponse> getAvailableScheduleResult(@PathVariable Long groupId, @PathVariable Long scheduleId) {
-//        AvailableScheduleResponse availableResult = availableScheduleService.getAvailableScheduleResult(groupId, scheduleId);
-//        return ResponseEntity.ok(availableResult);
-//    }
 
 
 }

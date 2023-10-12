@@ -12,7 +12,15 @@ public class HomeController {
     private final HomeService HomeService;
     @GetMapping("/home/{userId}")
     public ResponseEntity<HomeResponse> getHome(@PathVariable Long userId) {
-        HomeResponse home = HomeService.getHomeInfo(userId);
-        return ResponseEntity.ok(home);
+        try {
+            HomeResponse home = HomeService.getHomeInfo(userId);
+            return ResponseEntity.ok(home);
+
+        }catch (Exception e) {
+            //TODO : EXCEPTION 처리 필요
+            System.out.println(e);
+            //
+        };
+        return null;
     }
 }
